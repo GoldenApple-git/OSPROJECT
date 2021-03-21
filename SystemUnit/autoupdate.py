@@ -12,21 +12,25 @@ class Update:
             if "version" in tuple(lines.split(","))[0]:
                 self.version = tuple(lines.split(","))[1]
                 break
-        self.version = urlopen(Request("https://raw.githubusercontent.com/GoldenApple-git/OSPROJECT/main/version.txt?token=AJNKA2RSCLOQRGBGV7AIKMDAK53MU")).read().decode()
+        self.versionnew = urlopen(Request("https://raw.githubusercontent.com/GoldenApple-git/OSPROJECT/main/version.txt")).read().decode()
         self.get = open("./settingsdata.db", "r", newline="").read().split("#")
         p=0
         for lines in self.get:
+            print(tuple(lines.split(","))[0])
             if "version" in tuple(lines.split(","))[0]:
                 datas = open("./settingsdata.db", "r", newline="").readlines()
                 if datas[p][-2:] == "#\n":
                     datas[p] = f"version,{self.version}#\n"
+                    open("./settingsdata.db", "w", newline="").writelines(datas)
+                    break
                 else:
                     datas[p] = f"version,{self.version}"
+                    open("./settingsdata.db", "w", newline="").writelines(datas)
+                    break
             p+=1
-            open("./settingsdata.db", "w", newline="").writelines(datas)
 
     def check(self):
-        if self.rawdata == self.version:
+        if self.versionnew != self.version:
             return True
         else:
             return False
@@ -43,7 +47,7 @@ class Update:
         return api_url, download_dirs
 
     def upgrade(self, url,output_dir):
-            flatten = False
+            flatten = True
             api_url, download_dirs = self.create_url(url)
 
             if not flatten:
