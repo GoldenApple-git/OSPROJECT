@@ -7,6 +7,8 @@ class SetData:
     def enddata(self):
         if self.param[0] == "account":
             return "You can't do that !"
+        if self.param[0] == "version":
+            return "You can't do that !"
         for letter in self.param[0]:
             if letter == "#":
                 return "No '#' allowed"

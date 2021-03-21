@@ -1,9 +1,14 @@
 from connect import Login
 from idle import Idle
 from register import Reg
+from autoupdate import Update
 
 class launch:
     def __init__(self):
+        U = Update()
+        if U.check():
+            U.upgrade("https://github.com/GoldenApple-git/OSPROJECT/tree/main/ApplicationsMain","../")
+            U.upgrade("https://github.com/GoldenApple-git/OSPROJECT/tree/main/SystemUnit","../")
         self.rawdata = open("./settingsdata.db", "r", newline="").read().split("#")
 
     def check(self, find=None):
